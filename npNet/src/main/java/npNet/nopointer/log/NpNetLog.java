@@ -9,23 +9,13 @@ public class NpNetLog {
     /**
      * 是否允许log
      */
-    public static boolean enableLog = true;
+    public static boolean enaLog = true;
 
-
-    /**
-     * 是否允许lig的Log
-     */
-    public static boolean enableLibLog = false;
-
-    public static void logLibBleLog(String message) {
-        if (!enableLibLog) return;
-        Log.e("NpNetLog", message);
-    }
 
     public static void log(String message) {
-        if (!enableLog) return;
-        if (mNpBleLogPrinter != null) {
-            log(mNpBleLogPrinter.initTag(), message);
+        if (!enaLog) return;
+        if (mNpNetLogPrinter != null) {
+            log(mNpNetLogPrinter.initTag(), message);
         } else {
             log("NpNetLog", message);
         }
@@ -35,20 +25,20 @@ public class NpNetLog {
         if (TextUtils.isEmpty(tag)) {
             tag = "NpNetLog";
         }
-        if (mNpBleLogPrinter == null) {
+        if (mNpNetLogPrinter == null) {
             Log.e(tag, message);
         } else {
-            mNpBleLogPrinter.onLogPrint(tag, message);
+            mNpNetLogPrinter.onLogPrint(tag, message);
         }
     }
 
-    private static NpBleLogPrinter mNpBleLogPrinter;
+    private static NpNetLogPrinter mNpNetLogPrinter;
 
-    public static void setNpBleLogPrinter(NpBleLogPrinter npBleLogPrinter) {
-        mNpBleLogPrinter = npBleLogPrinter;
+    public static void setNpNetLogPrinter(NpNetLogPrinter NpNetLogPrinter) {
+        mNpNetLogPrinter = NpNetLogPrinter;
     }
 
-    public static interface NpBleLogPrinter {
+    public static interface NpNetLogPrinter {
         void onLogPrint(String message);
 
         void onLogPrint(String tag, String message);
