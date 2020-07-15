@@ -10,7 +10,6 @@ import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import npNet.nopointer.utils.log.LogUtil;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;

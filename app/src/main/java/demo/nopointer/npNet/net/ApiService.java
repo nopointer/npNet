@@ -1,5 +1,6 @@
 package demo.nopointer.npNet.net;
 
+import demo.nopointer.npNet.net.Resp.YCResp;
 import demo.nopointer.npNet.net.Resp.YCRespData;
 import demo.nopointer.npNet.net.Resp.YCRespListData;
 import demo.nopointer.npNet.net.entity.LoginResult;
@@ -12,16 +13,10 @@ import retrofit2.http.POST;
 public interface ApiService {
 
 
+    /*接运输任务*/
+    @POST("task/receiveTrsnsTask")
     @FormUrlEncoded
-    @POST("account/login")
-//    @POST("user/loginL")
-    NpCall<LoginResult> login(
-            @Field("userName") String phone,
-            @Field("vcode") String vCode,
-            @Field("areaCode") String areaCode
-    );
-
-
+    NpCall<YCResp> receiveTrsnsTask(@Field("transId") String transId);
 
 
 

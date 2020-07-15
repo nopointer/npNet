@@ -21,6 +21,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 }
 
@@ -31,11 +35,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.google.code.gson:gson:2.8.1'
     implementation project(path: ':npNet')
-    implementation 'com.github.nopointer:npNet:1.0.2'
+//    implementation 'com.github.nopointer:npNet:1.0.2'
 
 
-    api 'com.squareup.retrofit2:retrofit:2.6.1'
-    api 'com.squareup.retrofit2:converter-gson:2.0.2'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.1.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
     //阿里巴巴的json库
     api "com.alibaba:fastjson:1.2.47"
@@ -45,4 +49,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     // 如果你使用java8开发，可以添加这个依赖，里面只有一个类
 //    implementation "android.arch.lifecycle:common-java8:1.1.1"
+
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 }

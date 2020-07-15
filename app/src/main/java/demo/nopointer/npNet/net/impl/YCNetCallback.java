@@ -4,7 +4,6 @@ package demo.nopointer.npNet.net.impl;
 import npNet.nopointer.callback.NpBaseCallback;
 import npNet.nopointer.core.NpCall;
 import npNet.nopointer.core.error.NpHttpError;
-import npNet.nopointer.utils.log.LogUtil;
 
 public abstract class YCNetCallback<T> extends NpBaseCallback<T> {
 
@@ -23,7 +22,7 @@ public abstract class YCNetCallback<T> extends NpBaseCallback<T> {
     public void onCompleted(boolean isSuccess, NpCall<T> call, NpHttpError npHttpError) {
         super.onCompleted(isSuccess, call, npHttpError);
         if (npHttpError!=null){
-//            LogUtil.e("onCompleted--->" + npHttpError.getApiReturnCode());
+//            NpNetLog.log("onCompleted--->" + npHttpError.getApiReturnCode());
         }
     }
 }

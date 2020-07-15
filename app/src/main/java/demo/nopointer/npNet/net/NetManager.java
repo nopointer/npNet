@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Modifier;
+import java.util.concurrent.TimeUnit;
 
 import demo.nopointer.npNet.net.Resp.YCResp;
 import demo.nopointer.npNet.net.Resp.YCRespData;
@@ -16,7 +17,7 @@ import demo.nopointer.npNet.net.parser.GsonConverterFactory;
 import npNet.nopointer.core.NpBaseCall;
 import npNet.nopointer.core.NpCall;
 import npNet.nopointer.core.NpCallAdapterFactory;
-import npNet.nopointer.utils.log.LogUtil;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 /**
@@ -48,19 +49,20 @@ public class NetManager {
                 //设置数据解析器
 //                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(getClient().build())
                 .build();
     }
 
 
     public void login() {
-        ApiService apiService = mRetrofit.create(ApiService.class);
-        NpCall<LoginResult> call = apiService.login("13631697178", "9812", "86");
-        call.enqueue(new YCNetCallback<LoginResult>() {
-            @Override
-            public void onSuccess(NpCall<LoginResult> call, LoginResult response) {
-                LogUtil.e("登录结果:" + new Gson().toJson(response));
-            }
-        });
+//        ApiService apiService = mRetrofit.create(ApiService.class);
+//        NpCall<LoginResult> call = apiService.login("13631697178", "9812", "86");
+//        call.enqueue(new YCNetCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(NpCall<LoginResult> call, LoginResult response) {
+//                NpNetLog.log("登录结果:" + new Gson().toJson(response));
+//            }
+//        });
 //        new YCNetCallback<YCRespData>() {
 //            @Override
 //            public void onSuccess(NpCall<YCRespData> call, YCRespData response) {
@@ -132,6 +134,27 @@ public class NetManager {
 //                NpLog.e("onFailure->t:" + t.getMessage());
 //            }
 //        });
+    }
+
+    /**
+     * 接运输任务
+     *
+     * @param transId
+     * @param callback
+     */
+    public void receiveTrsnsTask(String transId, YCNetCallback<YCResp> callback) {
+        ApiService apiService = mRetrofit.create(ApiService.class);
+        String token = "69446a5e44316797c0d20f501dcc16c1";
+        token = "";
+        apiService.receiveTrsnsTask(transId).enqueue(callback);
+    }
+
+
+    private OkHttpClient.Builder getClient() {
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+        httpClientBuilder.connectTimeout(15, TimeUnit.SECONDS);
+        httpClientBuilder.addInterceptor(new TokenHeaderInterceptor());
+        return httpClientBuilder;
     }
 
 

@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
 import demo.nopointer.npNet.net.Resp.YCResp;
 import npNet.nopointer.core.error.NpHttpError;
 import npNet.nopointer.core.parser.NpBaseGsonConverter;
-import npNet.nopointer.utils.log.LogUtil;
+import npNet.nopointer.log.NpNetLog;
 import okhttp3.ResponseBody;
 
 public final class GsonResponseBodyConverter<T> extends NpBaseGsonConverter<T> {
@@ -32,7 +32,7 @@ public final class GsonResponseBodyConverter<T> extends NpBaseGsonConverter<T> {
     @Override
     public T convert(@NonNull ResponseBody value) throws IOException {
         String responseStr = value.string();
-        LogUtil.e("responseStr=>" + responseStr);
+        NpNetLog.log("responseStr=>" + responseStr);
         try {
             JSONObject jsonObject = new JSONObject(responseStr);
             final int code = jsonObject.getInt("errorCode");
@@ -45,14 +45,14 @@ public final class GsonResponseBodyConverter<T> extends NpBaseGsonConverter<T> {
             }
 
             if (code != 0) {
-                LogUtil.e("code非0 ,抛出异常" + code);
+                NpNetLog.log("code非0 ,抛出异常" + code);
                 throw new NpHttpError(200, code, msg);
             }
             if (YCResp.class == rawType) {
                 return (T) new YCResp(code, msg);
             }
-            LogUtil.e("rawType===>" + rawType);
-            LogUtil.e("type===>" + type);
+            NpNetLog.log("rawType===>" + rawType);
+            NpNetLog.log("type===>" + type);
 
 
             //如果data不等于空的话

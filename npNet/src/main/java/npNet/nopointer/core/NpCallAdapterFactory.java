@@ -5,8 +5,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.concurrent.Executor;
 
+import npNet.nopointer.log.NpNetLog;
 import npNet.nopointer.utils.NpUtils;
-import npNet.nopointer.utils.log.LogUtil;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
@@ -40,11 +40,11 @@ public class NpCallAdapterFactory extends CallAdapter.Factory {
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
         if (getRawType(returnType) != NpCall.class) {
-            LogUtil.e("RETURN_TYPE" + "getRawType(returnType) != NpCall.class");
+            NpNetLog.log("RETURN_TYPE" + "getRawType(returnType) != NpCall.class");
             return null;
         }
         if (!(returnType instanceof ParameterizedType)) {
-            LogUtil.e("RETURN_TYPE" + "!(returnType instanceof ParameterizedType)");
+            NpNetLog.log("RETURN_TYPE" + "!(returnType instanceof ParameterizedType)");
             throw new IllegalArgumentException(
                     String.format("%s return type must be parameterized as %s<Foo> or %s<? extends Foo>", RETURN_TYPE, RETURN_TYPE, RETURN_TYPE));
         }

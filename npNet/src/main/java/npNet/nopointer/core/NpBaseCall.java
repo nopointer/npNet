@@ -6,7 +6,6 @@ import java.util.concurrent.Executor;
 
 import npNet.nopointer.callback.NpCallback;
 import npNet.nopointer.core.error.NpHttpError;
-import npNet.nopointer.utils.log.LogUtil;
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,6 +1,6 @@
 package npNet.nopointer.core.error;
 
-import npNet.nopointer.utils.log.LogUtil;
+import npNet.nopointer.log.NpNetLog;
 
 /**
  * 错误码工具
@@ -27,7 +27,7 @@ public class NpHttpError extends RuntimeException {
         super(msg);
         this.netCode = netCode;
         this.apiReturnCode = apiReturnCode;
-        LogUtil.e("NpHttpError==>" + toString());
+        NpNetLog.log("NpHttpError==>" + toString());
     }
 
 
