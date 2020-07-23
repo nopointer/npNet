@@ -69,8 +69,10 @@ public class NpBaseCall<T> implements NpCall<T> {
 //                        T transformer = callback.transform(RealCall.this, body);
                         //noinspection ConstantConditions
 //                        Utils.checkNotNull(transformer == null, "transformer==null");
-                        callback.onSuccess(NpBaseCall.this, body);
-                        callback.onCompleted(true, NpBaseCall.this, null);
+                        if (callback != null) {
+                            callback.onSuccess(NpBaseCall.this, body);
+                            callback.onCompleted(true, NpBaseCall.this, null);
+                        }
                     }
                 });
             }
@@ -83,7 +85,9 @@ public class NpBaseCall<T> implements NpCall<T> {
 //                        HttpError error = callback.parseThrowable(RealCall.this, t);
                         //noinspection ConstantConditions
 //                        Utils.checkNotNull(error == null, "error==null");
-                        callback.onCompleted(false, NpBaseCall.this, error);
+                        if (callback != null) {
+                            callback.onCompleted(false, NpBaseCall.this, error);
+                        }
                     }
                 });
             }
