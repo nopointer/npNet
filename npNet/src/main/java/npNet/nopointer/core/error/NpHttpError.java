@@ -60,6 +60,10 @@ public class NpHttpError extends RuntimeException {
         return apiReturnData;
     }
 
+    public String getApiReturnMsgOrMessage() {
+        return apiReturnMsgOrMessage;
+    }
+
     @Override
     public String toString() {
 
