@@ -4,12 +4,13 @@ package demo.nopointer.npNet.net.impl;
 import npNet.nopointer.callback.NpBaseCallback;
 import npNet.nopointer.core.NpCall;
 import npNet.nopointer.core.error.NpHttpError;
+import npNet.nopointer.log.NpNetLog;
 
 public abstract class YCNetCallback<T> extends NpBaseCallback<T> {
 
     @Override
     public boolean printStackTraceEnable() {
-        return true;
+        return false;
     }
 
     @Override
@@ -19,9 +20,15 @@ public abstract class YCNetCallback<T> extends NpBaseCallback<T> {
 
 
     @Override
-    public void onCompleted(boolean isSuccess, NpCall<T> call, NpHttpError npHttpError) {
-        super.onCompleted(isSuccess, call, npHttpError);
-        if (npHttpError!=null){
+    public void onFailure(NpCall<T> call, NpHttpError npHttpError) {
+        super.onFailure(call, npHttpError);
+        NpNetLog.log("npHttpError:"+npHttpError.toString());
+    }
+
+    @Override
+    public void onCompleted(NpCall<T> call, NpHttpError npHttpError) {
+        super.onCompleted(call, npHttpError);
+        if (npHttpError != null) {
 //            NpNetLog.log("onCompleted--->" + npHttpError.getApiReturnCode());
         }
     }

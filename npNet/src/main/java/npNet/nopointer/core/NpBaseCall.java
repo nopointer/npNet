@@ -71,7 +71,7 @@ public class NpBaseCall<T> implements NpCall<T> {
 //                        Utils.checkNotNull(transformer == null, "transformer==null");
                         if (callback != null) {
                             callback.onSuccess(NpBaseCall.this, body);
-                            callback.onCompleted(true, NpBaseCall.this, null);
+                            callback.onCompleted(NpBaseCall.this, null);
                         }
                     }
                 });
@@ -86,7 +86,8 @@ public class NpBaseCall<T> implements NpCall<T> {
                         //noinspection ConstantConditions
 //                        Utils.checkNotNull(error == null, "error==null");
                         if (callback != null) {
-                            callback.onCompleted(false, NpBaseCall.this, error);
+                            callback.onFailure(NpBaseCall.this, error);
+                            callback.onCompleted(NpBaseCall.this, error);
                         }
                     }
                 });

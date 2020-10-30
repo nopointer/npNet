@@ -1,12 +1,9 @@
 package demo.nopointer.npNet.net.parser;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +43,10 @@ public final class GsonResponseBodyConverter<T> extends NpBaseGsonConverter<T> {
 
             if (code != 0) {
                 NpNetLog.log("code非0 ,抛出异常" + code);
+                //如果data不等于空的话
+                if (!jsonObject.isNull("data")) {
+                    throw new NpHttpError(200, code, msg,responseStr);
+                }
                 throw new NpHttpError(200, code, msg);
             }
             if (YCResp.class == rawType) {

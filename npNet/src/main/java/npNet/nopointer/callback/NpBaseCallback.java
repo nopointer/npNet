@@ -14,13 +14,15 @@ public abstract class NpBaseCallback<T> implements NpCallback<T> {
 
 
     @Override
-    public void onCompleted(boolean isSuccess, NpCall<T> call, NpHttpError npHttpError) {
-        if (npHttpError == null) return;
+    public void onFailure(NpCall<T> call, NpHttpError npHttpError) {
         Throwable throwable = npHttpError.getCause();
         if (throwable != null) {
             if (printStackTraceEnable()) {
-                NpNetLog.log("onCompleted->printStackTrace");
+                NpNetLog.log("onCompleted->printStackTrace============start");
+                NpNetLog.log("onCompleted->printStackTrace=================");
                 throwable.printStackTrace();
+                NpNetLog.log("onCompleted->printStackTrace=================");
+                NpNetLog.log("onCompleted->printStackTrace===============end");
             }
             if (throwable instanceof JsonSyntaxException) {
                 NpNetLog.log("Json解析异常！！！");
@@ -30,6 +32,7 @@ public abstract class NpBaseCallback<T> implements NpCallback<T> {
                 NpNetLog.log("当前设备网络连接异常！！！");
             } else if (throwable instanceof HttpException) {
                 HttpException httpException = (HttpException) throwable;
+                npHttpError.setNetCode(httpException.code());
                 switch (httpException.code()) {
                     case 400:
                         NpNetLog.log("请求参数错误");
@@ -48,9 +51,15 @@ public abstract class NpBaseCallback<T> implements NpCallback<T> {
                         break;
                 }
             }
-        } else {
-            NpNetLog.log("onCompleted->" + npHttpError.getNetCode() + "//" + npHttpError.getApiReturnCode() + "//" + npHttpError.getMessage());
+//        } else {
+//            NpNetLog.log("onCompleted->" + npHttpError.getNetCode() + "//" + npHttpError.getApiReturnCode() + "//" + npHttpError.getMessage());
         }
+    }
+
+    @Override
+    public void onCompleted(NpCall<T> call, NpHttpError npHttpError) {
+
+
     }
 
 

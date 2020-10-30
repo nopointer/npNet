@@ -1,19 +1,15 @@
 package demo.nopointer.npNet;
 
-import android.Manifest;
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-
-import java.util.Locale;
 
 import demo.nopointer.R;
 import demo.nopointer.npNet.net.NetManager;
 import demo.nopointer.npNet.net.Resp.YCResp;
 import demo.nopointer.npNet.net.impl.YCNetCallback;
 import npNet.nopointer.core.NpCall;
+import npNet.nopointer.core.error.NpHttpError;
 
 
 public class MainActivity extends Activity {
@@ -34,6 +30,11 @@ public class MainActivity extends Activity {
                 NetManager.getInstance().receiveTrsnsTask("1", new YCNetCallback<YCResp>() {
                     @Override
                     public void onSuccess(NpCall<YCResp> call, YCResp response) {
+
+                    }
+
+                    @Override
+                    public void onCompleted(NpCall<YCResp> call, NpHttpError npHttpError) {
 
                     }
                 });

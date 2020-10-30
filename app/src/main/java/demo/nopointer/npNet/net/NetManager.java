@@ -146,7 +146,7 @@ public class NetManager {
         ApiService apiService = mRetrofit.create(ApiService.class);
         String token = "69446a5e44316797c0d20f501dcc16c1";
         token = "";
-        apiService.receiveTrsnsTask(transId).enqueue(callback);
+        apiService.receiveTrsnsTask().enqueue(callback);
     }
 
 
