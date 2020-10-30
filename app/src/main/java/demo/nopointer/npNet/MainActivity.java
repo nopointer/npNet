@@ -9,7 +9,6 @@ import demo.nopointer.npNet.net.NetManager;
 import demo.nopointer.npNet.net.Resp.YCResp;
 import demo.nopointer.npNet.net.impl.YCNetCallback;
 import npNet.nopointer.core.NpCall;
-import npNet.nopointer.core.error.NpHttpError;
 
 
 public class MainActivity extends Activity {
@@ -33,10 +32,6 @@ public class MainActivity extends Activity {
 
                     }
 
-                    @Override
-                    public void onCompleted(NpCall<YCResp> call, NpHttpError npHttpError) {
-
-                    }
                 });
 //                NetManager.getInstance().login();
 //                NetManager.getInstance().login();

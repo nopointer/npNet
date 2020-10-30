@@ -28,8 +28,5 @@ public abstract class YCNetCallback<T> extends NpBaseCallback<T> {
     @Override
     public void onCompleted(NpCall<T> call, NpHttpError npHttpError) {
         super.onCompleted(call, npHttpError);
-        if (npHttpError != null) {
-//            NpNetLog.log("onCompleted--->" + npHttpError.getApiReturnCode());
-        }
     }
 }

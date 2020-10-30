@@ -8,7 +8,7 @@ public interface ApiService {
 
 
     /*接运输任务*/
-    @POST("task/carTypeList")
+    @POST("task/carTypeListL")
     NpCall<YCResp> receiveTrsnsTask( );
 
 

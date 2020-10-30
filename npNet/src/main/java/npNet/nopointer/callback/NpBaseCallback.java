@@ -58,8 +58,9 @@ public abstract class NpBaseCallback<T> implements NpCallback<T> {
 
     @Override
     public void onCompleted(NpCall<T> call, NpHttpError npHttpError) {
-
-
+        NpNetLog.log("请求完成");
+        if (npHttpError!=null)
+        NpNetLog.log("onCompleted->" + npHttpError.getNetCode() + "//" + npHttpError.getApiReturnCode() + "//" + npHttpError.getMessage());
     }
 
 

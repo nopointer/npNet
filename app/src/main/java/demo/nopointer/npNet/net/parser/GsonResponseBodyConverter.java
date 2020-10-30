@@ -52,9 +52,6 @@ public final class GsonResponseBodyConverter<T> extends NpBaseGsonConverter<T> {
             if (YCResp.class == rawType) {
                 return (T) new YCResp(code, msg);
             }
-            NpNetLog.log("rawType===>" + rawType);
-            NpNetLog.log("type===>" + type);
-
 
             //如果data不等于空的话
             if (!jsonObject.isNull("data")) {
