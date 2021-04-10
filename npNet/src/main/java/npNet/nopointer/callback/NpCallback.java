@@ -29,6 +29,9 @@ public interface NpCallback<T> {
     void onSuccess(NpCall<T> call, T response);
 
 
+    void onSuccessWithJson(NpCall<T> call,String jsonString);
+
+
     /**
      * 请求失败
      *

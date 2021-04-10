@@ -15,14 +15,14 @@ public abstract class YCNetCallback<T> extends NpBaseCallback<T> {
 
     @Override
     public void onStart(NpCall<T> call) {
-//        NpLog.e("onStart->" + call.request().toString());
+        NpNetLog.log("onStart->" + call.request().toString());
     }
 
 
     @Override
     public void onFailure(NpCall<T> call, NpHttpError npHttpError) {
         super.onFailure(call, npHttpError);
-        NpNetLog.log("npHttpError:"+npHttpError.toString());
+        NpNetLog.log("onFailure->npHttpError:"+npHttpError.toString());
     }
 
     @Override

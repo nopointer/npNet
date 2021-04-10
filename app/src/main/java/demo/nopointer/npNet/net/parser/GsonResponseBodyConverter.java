@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 
 import demo.nopointer.npNet.net.Resp.YCResp;
 import npNet.nopointer.core.error.NpHttpError;
+import npNet.nopointer.core.error.NpHttpWithJsonDataButNotRealError;
 import npNet.nopointer.core.parser.NpBaseGsonConverter;
 import npNet.nopointer.log.NpNetLog;
 import okhttp3.ResponseBody;
@@ -32,6 +33,14 @@ public final class GsonResponseBodyConverter<T> extends NpBaseGsonConverter<T> {
         NpNetLog.log("responseStr=>" + responseStr);
         try {
             JSONObject jsonObject = new JSONObject(responseStr);
+
+            if (jsonObject.isNull("errorCode")&&(jsonObject.isNull("msg")||jsonObject.isNull("message"))){
+                //数据是Json，但是不符合通用json数据结构
+                NpNetLog.log("数据是Json，但是不符合通用json数据结构,数据需要从其他接口去取");
+                NpHttpWithJsonDataButNotRealError jsonDataButNotRealError =new NpHttpWithJsonDataButNotRealError();
+                jsonDataButNotRealError.setJsonString(responseStr);
+                throw jsonDataButNotRealError;
+            }
             final int code = jsonObject.getInt("errorCode");
             String msg = "no msg";
             if (!jsonObject.isNull("msg")) {
@@ -70,6 +79,7 @@ public final class GsonResponseBodyConverter<T> extends NpBaseGsonConverter<T> {
             }
             return (T) type;
         } catch (JSONException e) {
+            e.printStackTrace();
             throw new NpHttpError(200, 0, e.getMessage());
         }
     }

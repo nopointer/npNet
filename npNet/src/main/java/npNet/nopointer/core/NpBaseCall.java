@@ -6,6 +6,8 @@ import java.util.concurrent.Executor;
 
 import npNet.nopointer.callback.NpCallback;
 import npNet.nopointer.core.error.NpHttpError;
+import npNet.nopointer.core.error.NpHttpWithJsonDataButNotRealError;
+import npNet.nopointer.log.NpNetLog;
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +48,7 @@ public class NpBaseCall<T> implements NpCall<T> {
         delegate.enqueue(new Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
+                NpNetLog.log("响应:" + response.toString());
                 if (response != null && response.code() == 200 && response.body() != null) {
                     callSuccess(response.body());
                 } else {
@@ -57,6 +60,9 @@ public class NpBaseCall<T> implements NpCall<T> {
             public void onFailure(Call<T> call, Throwable t) {
                 if (t instanceof NpHttpError) {
                     callFailure((NpHttpError) t);
+                } else if (t instanceof NpHttpWithJsonDataButNotRealError) {
+                    NpHttpWithJsonDataButNotRealError jsonDataButNotRealError = (NpHttpWithJsonDataButNotRealError) t;
+                    callSuccessWithJson(jsonDataButNotRealError.getJsonString());
                 } else {
                     callFailure(new NpHttpError(t));
                 }
@@ -71,6 +77,7 @@ public class NpBaseCall<T> implements NpCall<T> {
 //                        Utils.checkNotNull(transformer == null, "transformer==null");
                         if (callback != null) {
                             callback.onSuccess(NpBaseCall.this, body);
+
                             callback.onCompleted(NpBaseCall.this, null);
                         }
                     }
@@ -88,6 +95,23 @@ public class NpBaseCall<T> implements NpCall<T> {
                         if (callback != null) {
                             callback.onFailure(NpBaseCall.this, error);
                             callback.onCompleted(NpBaseCall.this, error);
+                        }
+                    }
+                });
+            }
+
+
+            private void callSuccessWithJson(final String jsonString) {
+                callbackExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+//                        HttpError error = callback.parseThrowable(RealCall.this, t);
+                        //noinspection ConstantConditions
+//                        Utils.checkNotNull(error == null, "error==null");
+                        if (callback != null) {
+                            callback.onSuccessWithJson(NpBaseCall.this, jsonString);
+                            callback.onCompleted(NpBaseCall.this, null);
                         }
                     }
                 });
